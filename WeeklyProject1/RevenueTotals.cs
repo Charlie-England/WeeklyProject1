@@ -9,11 +9,13 @@ namespace WeeklyProject1
     public class RevenueTotals
     {
         public Dictionary<int, Dictionary<int, Dictionary<string,int>>> RevTotals; //Year: {Month:{basic:int, delux:int, total:int}}
+        public Dictionary<int,int> YearsTotal { get; }
         
         public RevenueTotals()
         {
             //Create new revenue totals
             RevTotals = new Dictionary<int, Dictionary<int, Dictionary<string,int>>>();
+            YearsTotal = new Dictionary<int, int>();
         }
 
         public void addDay(DaySale daySales)
@@ -65,6 +67,14 @@ namespace WeeklyProject1
             RevTotals[year][month]["basic"] += daySales.Basic;
             RevTotals[year][month]["delux"] += daySales.Delux;
             RevTotals[year][month]["total"] += daySales.Total;
+
+            if (YearsTotal.Keys.Contains(year))
+            {
+                YearsTotal[year] += daySales.Total;
+            } else
+            {
+                YearsTotal.Add(year,daySales.Total);
+            }
         }
 
         private void CreateNewDictTotals(Dictionary<string,int> dictTotals)
@@ -139,15 +149,21 @@ namespace WeeklyProject1
                     report.Append("\n");
                 }
             }
+            report.Append("\n\nYear Report:\n");
 
-            return report.ToString(); ;
+            //Add year summary to report
+            report.Append($"{"Year",monthSpacing} | {"Totals:",monthSpacing}\n");
+            foreach (KeyValuePair<int, int> yearTotal in YearsTotal)
+            {
+                report.Append($"{yearTotal.Key,monthSpacing} | {yearTotal.Value,monthSpacing:C2}\n");
+            }
+
+            return report.ToString();
         }
 
         public string GraphReport()
         {
             StringBuilder graphReport = new StringBuilder();
-            const int monthSpacing = 8;
-            const int otherSpacing = 15;
 
             int curYearIndex = 1;
             var graphDict = new Dictionary<int, List<int>>();

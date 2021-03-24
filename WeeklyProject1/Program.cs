@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 
 namespace WeeklyProject1
 {
@@ -38,9 +39,10 @@ namespace WeeklyProject1
             }
 
 
-            //Console.WriteLine(RevTotals.RevenueReport());
-            Console.WriteLine(RevTotals.GraphReport());
-            Console.WriteLine();
+            Console.WriteLine(RevTotals.RevenueReport());
+            //Console.WriteLine(RevTotals.GraphReport());
+
+            Console.ReadLine();
         }
     }
 }
