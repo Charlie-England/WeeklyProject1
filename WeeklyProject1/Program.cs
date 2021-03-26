@@ -39,10 +39,20 @@ namespace WeeklyProject1
             }
 
 
-            Console.WriteLine(RevTotals.RevenueReport());
+            //Console.WriteLine(RevTotals.RevenueReport());
             //Console.WriteLine(RevTotals.GraphReport());
+            WriteToFile("RevReport", RevTotals.RevenueReport());
 
             Console.ReadLine();
         }
+
+        private static void WriteToFile(string fileName, List<string> data)
+        {
+            //takes a string data and writes this to a filename
+            string fPath = Directory.GetCurrentDirectory() + "\\" + fileName + ".txt";
+
+            File.WriteAllLines(fPath,data);
+        }
     }
+
 }

@@ -85,80 +85,84 @@ namespace WeeklyProject1
             dictTotals.Add("total", 0);
         }
 
-        public string RevenueReport()
+        public List<string> RevenueReport()
         {
             //Returns a string of the report for the yearly revenue broken down by month/year
-            StringBuilder report = new StringBuilder();
+            List<string> report = new List<string>();
+            
+
+
             const int monthSpacing = 8;
             const int otherSpacing = 15;
-            report.Append($"{"Month",monthSpacing} | {"Total Sales",otherSpacing} |  {"Total Basic",otherSpacing}  |  {"Total Delux",otherSpacing}  |\n");
-            report.Append("_________________________________________________________________\n");
+            report.Add($"{"Month",monthSpacing} | {"Total Sales",otherSpacing} |  {"Total Basic",otherSpacing}  |  {"Total Delux",otherSpacing}  |");
+            report.Add("_________________________________________________________________");
 
 
             foreach (KeyValuePair<int, Dictionary<int,Dictionary<string,int>>> yearRep in RevTotals)
             {
                 foreach(KeyValuePair<int,Dictionary<string,int>> monthRep in RevTotals[yearRep.Key])
                 {
+                    var subString = new StringBuilder();
                     switch (monthRep.Key)
                     {
                         case 1:
-                            report.Append($"{"Jan-"+$"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Jan-"+$"{yearRep.Key}",monthSpacing}");
                             break;
                         case 2:
-                            report.Append($"{"Feb-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Feb-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 3:
-                            report.Append($"{"Mar-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Mar-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 4:
-                            report.Append($"{"Apr-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Apr-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 5:
-                            report.Append($"{"May-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"May-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 6:
-                            report.Append($"{"Jun-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Jun-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 7:
-                            report.Append($"{"Jul-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Jul-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 8:
-                            report.Append($"{"Aug-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Aug-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 9:
-                            report.Append($"{"Sep-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Sep-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 10:
-                            report.Append($"{"Oct-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Oct-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 11:
-                            report.Append($"{"Nov-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Nov-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                         case 12:
-                            report.Append($"{"Dec-" + $"{yearRep.Key}",monthSpacing}");
+                            subString.Append($"{"Dec-" + $"{yearRep.Key}",monthSpacing}");
                             break;
                     }
 
-                    report.Append(" | ");
-                    report.Append($"{monthRep.Value["total"],otherSpacing:C2}");
-                    report.Append(" | ");
-                    report.Append($"{monthRep.Value["basic"],otherSpacing}");
-                    report.Append(" | ");
-                    report.Append($"{monthRep.Value["delux"],otherSpacing}");
-                    report.Append(" | ");
-                    report.Append("\n");
+                    subString.Append(" | ");
+                    subString.Append($"{monthRep.Value["total"],otherSpacing:C2}");
+                    subString.Append(" | ");
+                    subString.Append($"{monthRep.Value["basic"],otherSpacing}");
+                    subString.Append(" | ");
+                    subString.Append($"{monthRep.Value["delux"],otherSpacing}");
+                    subString.Append(" | ");
+                    report.Add(subString.ToString());
                 }
             }
-            report.Append("\n\nYear Report:\n");
+            report.Add("Year Report:");
 
             //Add year summary to report
-            report.Append($"{"Year",monthSpacing} | {"Totals:",monthSpacing}\n");
+            report.Add($"{"Year",monthSpacing} | {"Totals:",monthSpacing}");
             foreach (KeyValuePair<int, int> yearTotal in YearsTotal)
             {
-                report.Append($"{yearTotal.Key,monthSpacing} | {yearTotal.Value,monthSpacing:C2}\n");
+                report.Add($"{yearTotal.Key,monthSpacing} | {yearTotal.Value,monthSpacing:C2}");
             }
 
-            return report.ToString();
+            return report;
         }
 
         public string GraphReport()
